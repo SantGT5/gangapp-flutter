@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:gangapp_flutter/auth/screens/home_screen.dart';
+import 'package:gangapp_flutter/auth/screens/intro_screen.dart';
 import 'package:gangapp_flutter/global_widgets/show_alert_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gangapp_flutter/models/user_model.dart';
-import 'package:gangapp_flutter/screens/intro_screen.dart';
-import 'package:gangapp_flutter/screens/home_screen.dart';
 
 class AuthController extends GetxController {
   TextEditingController emailController = TextEditingController();
