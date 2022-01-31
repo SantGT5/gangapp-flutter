@@ -95,3 +95,19 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+
+
+  # Replaceme: Add your custom icons
+  # Icons font
+  #
+  # To generate you custom icons visit https://www.fluttericon.com/
+  #
+  # 1. Load the previous app icons config, placed in assets/app_icons/config.json to prevent any
+  # loose
+  # 2. Add your new icons and download the files
+  # 3. Replace the following files:
+  #       - assets/app_icons/config.json
+  #       - fonts/AppIcons.ttf
+  #       - lib/ui/theme/app_icons_icons.dart

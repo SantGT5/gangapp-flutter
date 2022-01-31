@@ -1,11 +1,10 @@
-import 'package:gangapp_flutter/auth/bindings/auth_binding.dart';
-import 'package:gangapp_flutter/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gangapp_flutter/firebase_options.dart';
 
 import 'routes/app_pages.dart';
+import 'ui/auth/controllers/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

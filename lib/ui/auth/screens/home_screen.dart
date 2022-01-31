@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gangapp_flutter/auth/controllers/auth_controller.dart';
+import 'package:gangapp_flutter/ui/auth/controllers/auth_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

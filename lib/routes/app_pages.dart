@@ -1,7 +1,6 @@
-import 'package:gangapp_flutter/auth/bindings/auth_binding.dart';
-import 'package:gangapp_flutter/auth/screens/home_screen.dart';
-import 'package:gangapp_flutter/auth/screens/intro_screen.dart';
-import 'package:gangapp_flutter/auth/screens/loading_screen.dart';
+import 'package:gangapp_flutter/ui/auth/screens/home_screen.dart';
+import 'package:gangapp_flutter/ui/auth/screens/intro_screen.dart';
+import 'package:gangapp_flutter/ui/auth/screens/loading_screen.dart';
 import 'package:get/route_manager.dart';
 
 part 'app_routes.dart';
