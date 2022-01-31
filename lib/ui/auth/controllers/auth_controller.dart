@@ -123,7 +123,19 @@ class AuthController extends GetxController {
       );
       emailController.clear();
       passController.clear();
+      Get.snackbar(
+        "Your data is correct",
+        "Wellcome",
+        icon: Icon(Icons.person, color: Colors.white),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } catch (err) {
+      Get.snackbar(
+        "Error",
+        "Your data is incorrect",
+        icon: Icon(Icons.person, color: Colors.white),
+        snackPosition: SnackPosition.BOTTOM,
+      );
       print(err);
     }
   }

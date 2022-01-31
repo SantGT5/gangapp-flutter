@@ -43,6 +43,7 @@ dependencies:
   build_runner:
   google_sign_in: ^5.2.3
   google_fonts: ^2.2.0
+  flutter_signin_button: ^2.0.0
 
 dev_dependencies:
   flutter_test:
