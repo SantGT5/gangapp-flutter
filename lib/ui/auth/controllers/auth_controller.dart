@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:gangapp_flutter/global_widgets/show_alert_dialog.dart';
 import 'package:gangapp_flutter/ui/auth/screens/home_screen.dart';
 import 'package:gangapp_flutter/ui/auth/screens/intro_screen.dart';
+import 'package:gangapp_flutter/ui/auth/screens/login_register_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:gangapp_flutter/services/firestore/firestore_service_users.dart';
@@ -56,7 +57,7 @@ class AuthController extends GetxController {
     }
 
     if (_firebaseUser == null) {
-      Get.offAll(IntroScreen());
+      Get.offAll(LoginRegisterScreen());
     } else {
       Get.offAll(HomeScreen());
     }

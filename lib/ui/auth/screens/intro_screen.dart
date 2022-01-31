@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gangapp_flutter/ui/auth/controllers/auth_controller.dart';
 import 'package:gangapp_flutter/ui/theme/color_theme.dart';
 import 'package:gangapp_flutter/ui/theme/gangapp_icons.dart';
 
@@ -8,12 +7,9 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthController authController = AuthController();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await authController.signInGoogle();
-        },
+        onPressed: () async {},
       ),
       body: Center(
         child: Container(
