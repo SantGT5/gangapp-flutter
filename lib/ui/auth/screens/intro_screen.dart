@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gangapp_flutter/ui/auth/controllers/auth_controller.dart';
+import 'package:gangapp_flutter/ui/theme/gangapp_icons.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class IntroScreen extends StatelessWidget {
         },
       ),
       body: Center(
-        child: Text("Intro Screen"),
+        child: Icon(GangappIcons.search_product),
       ),
     );
   }
