@@ -45,6 +45,7 @@ dependencies:
   google_fonts: ^2.2.0
   flutter_signin_button: ^2.0.0
   flutter_launcher_icons: ^0.9.2
+  flutter_native_splash: ^2.0.1+1
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+flutter_native_splash:
+  android: true
+  ios: true
+  web: true
+  color: "#FFFFFF"
+  image: assets/image/splash_img.png
+
 
 flutter_icons:
   image_path_android: "assets/launcher/appicon-android.png"
