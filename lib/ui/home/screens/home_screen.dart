@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gangapp_flutter/global_widgets/navigation/custom_navigation_bar.dart';
 import 'package:gangapp_flutter/ui/auth/controllers/auth_controller.dart';
 import 'package:gangapp_flutter/ui/home/controllers/nav_controller.dart';
+import 'package:gangapp_flutter/ui/home/screens/product_home_screen.dart';
 import 'package:gangapp_flutter/ui/profile/screens/profile_screen.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page1.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page2.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     var screens = [
       Page1(),
       Page2(),
-      Page3(),
+      ProductHomeScreen(),
       ProfileScreen(),
     ];
 

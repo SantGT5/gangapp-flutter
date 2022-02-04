@@ -14,6 +14,8 @@ class EditProfile extends StatelessWidget {
 
   final picker = ImagePicker();
 
+  EditProfile({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +23,7 @@ class EditProfile extends StatelessWidget {
         () => ListView(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 80, left: 40),
+              padding: const EdgeInsets.only(top: 20, left: 40),
               child: Row(
                 children: [
                   Container(
@@ -30,7 +32,7 @@ class EditProfile extends StatelessWidget {
                     color: AppColors.secondary[100],
                     child: GestureDetector(
                       onTap: () => Get.back(),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back,
                         color: Colors.white,
                       ),
@@ -89,11 +91,10 @@ class EditProfile extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 width: double.infinity,
                 child: GlobalTextField(
-                  validator: FormValidator().isValidEmail,
-                  controller: authController.nameController,
+                  controller: authController.nameController
+                    ..text = authController.firestoreUser.value!.name!,
                   obscureText: false,
-                  hintText:
-                      authController.firestoreUser.value!.name ?? "Tu nombre",
+                  hintText: "Tu nombre",
                   keyboardType: TextInputType.emailAddress,
                   maxLines: 1,
                   minLines: 1,
@@ -104,7 +105,7 @@ class EditProfile extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 40),
               alignment: Alignment.bottomCenter,
               child: SizedBox(
                 height: 50,

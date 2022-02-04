@@ -4,6 +4,7 @@ import 'package:gangapp_flutter/ui/home/controllers/nav_controller.dart';
 import 'package:gangapp_flutter/ui/home/screens/home_screen.dart';
 import 'package:gangapp_flutter/ui/auth/screens/intro_screen.dart';
 import 'package:gangapp_flutter/ui/auth/screens/loading_screen.dart';
+import 'package:gangapp_flutter/ui/products/pages/product_form.dart';
 import 'package:gangapp_flutter/ui/profile/screens/profile_screen.dart';
 import 'package:get/route_manager.dart';
 
@@ -28,6 +29,10 @@ class AppPages {
     GetPage(
       name: Routes.INTRO,
       page: () => IntroScreen(),
+    ),
+    GetPage(
+      name: Routes.PRODUCTFORM,
+      page: () => ProductForm(),
     ),
   ];
 }
