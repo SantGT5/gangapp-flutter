@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gangapp_flutter/global_widgets/textfield_global.dart';
+import 'package:gangapp_flutter/models/product_model.dart';
+import 'package:gangapp_flutter/services/firestore/firestore_service_products.dart';
 import 'package:gangapp_flutter/ui/products/controllers/product_controller.dart';
 import 'package:gangapp_flutter/ui/theme/color_theme.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,8 @@ class ProductForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductController productController = ProductController();
+    DataBaseProducts dataBaseProducts = DataBaseProducts();
+
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -94,7 +98,17 @@ class ProductForm extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
-                      onPressed: () async {}),
+                      onPressed: () async {
+                        ProductModel newProduct = ProductModel(
+                          uid: dataBaseProducts.generateIdProduct(),
+                          name: "name",
+                          description: "description",
+                          originalPrice: "originalPrice",
+                          realPrice: "realPrice",
+                        );
+
+                        dataBaseProducts.createNewProduct(newProduct);
+                      }),
                 ),
               ),
             ],
