@@ -19,4 +19,22 @@ class FormValidator {
     }
     return null;
   }
+
+  String? isValidDescription(String? text) {
+    if (text == null || text.isEmpty) {
+      return SK.description_cannto_be_empyt;
+    } else if (text.length < 15) {
+      return SK.description_too_short;
+    }
+    return null;
+  }
+
+  String? isValidPrice(String? text) {
+    return (text ?? "").isNum ? null : SK.not_valid_price;
+  }
 }
+
+
+// bool checkRegexp =
+//           RegExp(r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$').hasMatch(text);
+
