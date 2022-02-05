@@ -9,6 +9,7 @@ class DataBaseProducts {
 
   Future<bool> createNewProduct(ProductModel product) async {
     try {
+      product.uid = _service.generateId();
       await _firestore.collection(_collection).doc(product.uid).set({
         "uid": product.uid,
         "name": product.name,

@@ -12,7 +12,6 @@ class ProductForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductController productController = ProductController();
-    DataBaseProducts dataBaseProducts = DataBaseProducts();
 
     return Scaffold(
       body: Form(
@@ -100,14 +99,14 @@ class ProductForm extends StatelessWidget {
                       ),
                       onPressed: () async {
                         ProductModel newProduct = ProductModel(
-                          uid: dataBaseProducts.generateIdProduct(),
+                          uid: "",
                           name: "name",
                           description: "description",
                           originalPrice: "originalPrice",
                           realPrice: "realPrice",
                         );
 
-                        dataBaseProducts.createNewProduct(newProduct);
+                        productController.createProduct(newProduct);
                       }),
                 ),
               ),

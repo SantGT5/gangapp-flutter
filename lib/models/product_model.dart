@@ -3,7 +3,7 @@ part 'product_model.g.dart';
 
 @JsonSerializable(anyMap: true, explicitToJson: true)
 class ProductModel {
-  final String? uid;
+  String? uid;
   final String? name;
   final String? description;
   final String? originalPrice;
