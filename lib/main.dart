@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gangapp_flutter/firebase_options.dart';
+import 'package:gangapp_flutter/services/firebase_config/firebase_options.dart';
 
 import 'routes/app_pages.dart';
 import 'ui/auth/controllers/auth_controller.dart';
