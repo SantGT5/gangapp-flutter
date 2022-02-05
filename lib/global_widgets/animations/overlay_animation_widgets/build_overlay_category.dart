@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gangapp_flutter/routes/app_pages.dart';
 import 'package:gangapp_flutter/ui/home/controllers/nav_controller.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,9 @@ class BuildOverlayCategory extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () async {
-            navController.index.value = 0;
+            if (routeOverlay == Routes.HOME) {
+              navController.index.value = 0;
+            }
             Get.back();
             await Get.toNamed(routeOverlay);
           },

@@ -26,12 +26,12 @@ class EditProfile extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20, left: 40),
               child: Row(
                 children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    color: AppColors.secondary[100],
-                    child: GestureDetector(
-                      onTap: () => Get.back(),
+                  GestureDetector(
+                    onTap: () => Get.back(),
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      color: AppColors.secondary[100],
                       child: const Icon(
                         Icons.arrow_back,
                         color: Colors.white,

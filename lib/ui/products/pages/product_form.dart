@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gangapp_flutter/global_widgets/textfield_global.dart';
 import 'package:gangapp_flutter/ui/products/controllers/product_controller.dart';
+import 'package:gangapp_flutter/ui/theme/color_theme.dart';
+import 'package:get/get.dart';
 
 class ProductForm extends StatelessWidget {
   ProductForm({Key? key}) : super(key: key);
@@ -14,6 +16,25 @@ class ProductForm extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40, left: 30),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        color: AppColors.secondary[100],
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: Container(
