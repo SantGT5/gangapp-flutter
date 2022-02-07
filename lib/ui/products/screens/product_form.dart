@@ -14,7 +14,7 @@ class ProductForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    ProductController productController = ProductController();
+    ProductController productController = Get.find();
 
     return Scaffold(
       body: Form(
@@ -125,6 +125,31 @@ class ProductForm extends StatelessWidget {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Obx(
+                  () => DropdownButton<String>(
+                    value: productController.dropdownValue.value,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? newValue) {
+                      productController.dropdownValue.value = newValue!;
+                    },
+                    items: productController.productCategories
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.only(
                     left: 30, right: 30, bottom: 40, top: 40),
@@ -149,23 +174,25 @@ class ProductForm extends StatelessWidget {
                             color: Colors.white),
                       ),
                       onPressed: () async {
-                        //print(double.parse(productController.realPrice.text));
-                        if (_formKey.currentState!.validate()) {
-                          // ProductModel newProduct = ProductModel(
-                          //   uid: "",
-                          //   name: productController.nameProduct.text,
-                          //   description:
-                          //       productController.descriptionProduct.text,
-                          //   originalPrice:
-                          //       productController.originalPrice.text + "€",
-                          //   realPrice: productController.realPrice.text + "€",
-                          // );
+                        print(productController.dropdownValue.value);
 
-                          // productController.createProduct(newProduct);
-                        } else {
-                          showAlertDialog(
-                              context, "Error", "Rellene todos los campos");
-                        }
+                        //print(double.parse(productController.realPrice.text));
+                        // if (_formKey.currentState!.validate()) {
+                        //   // ProductModel newProduct = ProductModel(
+                        //   //   uid: "",
+                        //   //   name: productController.nameProduct.text,
+                        //   //   description:
+                        //   //       productController.descriptionProduct.text,
+                        //   //   originalPrice:
+                        //   //       productController.originalPrice.text + "€",
+                        //   //   realPrice: productController.realPrice.text + "€",
+                        //   // );
+
+                        //   // productController.createProduct(newProduct);
+                        // } else {
+                        //   showAlertDialog(
+                        //       context, "Error", "Rellene todos los campos");
+                        // }
                       }),
                 ),
               ),
