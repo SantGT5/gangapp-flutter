@@ -167,7 +167,7 @@ class RegisterScreen extends StatelessWidget {
                               onPressed: () async {
                                 await authController.signInGoogle();
                                 // await authController.signInAnonymous();
-                                //Get.to(Home());
+                                // Get.toNamed("/home");
                               },
                             ),
                           ),
