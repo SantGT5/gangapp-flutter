@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gangapp_flutter/global_widgets/show_alert_dialog.dart';
+import 'package:gangapp_flutter/global_widgets/get_image/get_image.dart';
 import 'package:gangapp_flutter/global_widgets/textfield_global.dart';
 import 'package:gangapp_flutter/models/product_model.dart';
 import 'package:gangapp_flutter/services/firestore/firestore_service_products.dart';
 import 'package:gangapp_flutter/ui/products/controllers/product_controller.dart';
+import 'package:gangapp_flutter/ui/products/controllers/product_edit_controller.dart';
 import 'package:gangapp_flutter/ui/theme/color_theme.dart';
 import 'package:gangapp_flutter/ui/utils/form_validator.dart';
 import 'package:get/get.dart';
@@ -15,6 +18,13 @@ class ProductForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductController productController = Get.find();
+    ProductEditController productEditController = Get.find();
+
+    productEditController.dropdownValue.value =
+        productController.productCategories.first;
+
+    GetImage getImage = GetImage();
+    DataBaseProducts dataBaseProducts = DataBaseProducts();
 
     return Scaffold(
       body: Form(
@@ -41,13 +51,71 @@ class ProductForm extends StatelessWidget {
                   ],
                 ),
               ),
+              Obx(
+                () => Padding(
+                  padding:
+                      const EdgeInsets.only(top: 70.0, left: 80, right: 80),
+                  child: ClipRRect(
+                    child: (productEditController.pathImage.value != '')
+                        ? Container(
+                            color: Colors.green,
+                            height: 200,
+                            width: 400,
+                            child: Image.file(
+                                File(productEditController.pathImage.value))
+
+                            //  Image.network(
+                            //   authController.firestoreUser.value!.photoUrl!,
+                            //   fit: BoxFit.fill,
+                            // ),
+                            )
+                        : Container(
+                            color: Colors.green,
+                            height: 200,
+                            width: 400,
+                          ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: TextButton(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.blue[200])),
+                    child: const Text(
+                      "EDITAR FOTO",
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    onPressed: () async {
+                      await getImage.showPicker(context);
+                      print(getImage.pathImage);
+                      productEditController.pathImage.value =
+                          getImage.pathImage;
+                    },
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: Container(
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   width: double.infinity,
                   child: GlobalTextField(
-                    controller: productController.nameProduct,
+                    controller: productEditController.nameProduct,
                     obscureText: false,
                     hintText: "Introduce el nombre del producto",
                     keyboardType: TextInputType.emailAddress,
@@ -55,7 +123,7 @@ class ProductForm extends StatelessWidget {
                     maxLines: 1,
                     minLines: 1,
                     onSave: (value) {
-                      productController.nameProduct.text = value!;
+                      productEditController.nameProduct.text = value!;
                     },
                   ),
                 ),
@@ -66,7 +134,7 @@ class ProductForm extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   width: double.infinity,
                   child: GlobalTextField(
-                    controller: productController.originalPrice,
+                    controller: productEditController.originalPrice,
                     obscureText: false,
                     hintText: "Introduce precio original en euros",
                     keyboardType: TextInputType.number,
@@ -74,7 +142,7 @@ class ProductForm extends StatelessWidget {
                     maxLines: 1,
                     minLines: 1,
                     onSave: (value) {
-                      productController.nameProduct.text = value!;
+                      productEditController.nameProduct.text = value!;
                     },
                   ),
                 ),
@@ -85,7 +153,7 @@ class ProductForm extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   width: double.infinity,
                   child: GlobalTextField(
-                    controller: productController.realPrice,
+                    controller: productEditController.realPrice,
                     obscureText: false,
                     hintText: "Introduce precio de la Ganga en euros",
                     keyboardType: TextInputType.number,
@@ -97,7 +165,7 @@ class ProductForm extends StatelessWidget {
                     maxLines: 1,
                     minLines: 1,
                     onSave: (value) {
-                      productController.realPrice.text = value!;
+                      productEditController.realPrice.text = value!;
                     },
                   ),
                 ),
@@ -108,19 +176,15 @@ class ProductForm extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   width: double.infinity,
                   child: GlobalTextField(
-                    controller: productController.descriptionProduct,
+                    controller: productEditController.descriptionProduct,
                     obscureText: false,
                     hintText: "Introduce la descripción del producto",
                     validator: FormValidator().isValidDescription,
                     keyboardType: TextInputType.multiline,
-                    inputFormaters: [
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d+\.?\d{0,2}'))
-                    ],
                     maxLines: 20,
                     minLines: 5,
                     onSave: (value) {
-                      productController.descriptionProduct.text = value!;
+                      productEditController.descriptionProduct.text = value!;
                     },
                   ),
                 ),
@@ -129,7 +193,7 @@ class ProductForm extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Obx(
                   () => DropdownButton<String>(
-                    value: productController.dropdownValue.value,
+                    value: productEditController.dropdownValue.value,
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
                     style: const TextStyle(color: Colors.deepPurple),
@@ -138,7 +202,7 @@ class ProductForm extends StatelessWidget {
                       color: Colors.deepPurpleAccent,
                     ),
                     onChanged: (String? newValue) {
-                      productController.dropdownValue.value = newValue!;
+                      productEditController.dropdownValue.value = newValue!;
                     },
                     items: productController.productCategories
                         .map<DropdownMenuItem<String>>((String value) {
@@ -174,9 +238,35 @@ class ProductForm extends StatelessWidget {
                             color: Colors.white),
                       ),
                       onPressed: () async {
-                        print(productController.dropdownValue.value);
+                        productEditController.productUid.value =
+                            dataBaseProducts.generateIdProduct();
+                        ProductModel newProduct = ProductModel(
+                            uid: productEditController.productUid.value,
+                            name: productEditController.nameProduct.text,
+                            description:
+                                productEditController.descriptionProduct.text,
+                            originalPrice:
+                                productEditController.originalPrice.text + "€",
+                            realPrice:
+                                productEditController.realPrice.text + "€",
+                            productCategory:
+                                productEditController.dropdownValue.value);
+                        print(newProduct.uid);
+                        print(newProduct.photoUrl);
 
-                        //print(double.parse(productController.realPrice.text));
+                        if (productEditController.pathImage.value != '') {
+                          await getImage.uploadFileProduct(
+                            context,
+                            File(productEditController.pathImage.value),
+                            productEditController.productUid.value,
+                            newProduct,
+                          );
+
+                          productEditController.createProduct(newProduct);
+                        }
+
+                        Get.back();
+
                         // if (_formKey.currentState!.validate()) {
                         //   // ProductModel newProduct = ProductModel(
                         //   //   uid: "",

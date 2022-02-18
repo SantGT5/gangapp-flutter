@@ -1,13 +1,13 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:gangapp_flutter/global_widgets/get_image/get_image.dart';
 import 'package:gangapp_flutter/global_widgets/textfield_global.dart';
 import 'package:gangapp_flutter/models/user_model.dart';
 import 'package:gangapp_flutter/ui/auth/controllers/auth_controller.dart';
 import 'package:gangapp_flutter/ui/theme/color_theme.dart';
-import 'package:gangapp_flutter/ui/utils/form_validator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class EditProfile extends StatelessWidget {
   final AuthController authController = Get.find();
@@ -18,6 +18,7 @@ class EditProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GetImage getImage = GetImage();
     return Scaffold(
       body: Obx(
         () => ListView(
@@ -41,22 +42,26 @@ class EditProfile extends StatelessWidget {
                 ],
               ),
             ),
-            if (authController.firestoreUser.value!.photoUrl != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 70.0, left: 80, right: 80),
-                child: ClipRRect(
-                  child: Container(
-                    color: Colors.green,
-                    height: 200,
-                    width: 400,
-                    child: Image.network(
-                      authController.firestoreUser.value!.photoUrl!,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  borderRadius: BorderRadius.circular(50),
-                ),
+            Padding(
+              padding: const EdgeInsets.only(top: 70.0, left: 80, right: 80),
+              child: ClipRRect(
+                child: (authController.pathImageUser.value != '')
+                    ? Container(
+                        color: Colors.green,
+                        height: 200,
+                        width: 400,
+                        child:
+                            Image.file(File(authController.pathImageUser.value))
+
+                        //  Image.network(
+                        //   authController.firestoreUser.value!.photoUrl!,
+                        //   fit: BoxFit.fill,
+                        // ),
+                        )
+                    : Container(),
+                borderRadius: BorderRadius.circular(50),
               ),
+            ),
             Container(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
               alignment: Alignment.bottomCenter,
@@ -80,7 +85,11 @@ class EditProfile extends StatelessWidget {
                         color: Colors.white),
                   ),
                   onPressed: () async {
-                    _showPicker(context);
+                    await getImage.showPicker(context);
+                    print(getImage.pathImage);
+                    authController.pathImageUser.value = getImage.pathImage;
+
+                    // print(GetImage().urlImage);
                   },
                 ),
               ),
@@ -91,8 +100,7 @@ class EditProfile extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 width: double.infinity,
                 child: GlobalTextField(
-                  controller: authController.nameController
-                    ..text = authController.firestoreUser.value!.name!,
+                  controller: authController.nameController..text = "userName",
                   obscureText: false,
                   hintText: "Tu nombre",
                   keyboardType: TextInputType.emailAddress,
@@ -140,83 +148,51 @@ class EditProfile extends StatelessWidget {
                 ),
               ),
             ),
+            Container(
+              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 40),
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: TextButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blue[200])),
+                  child: const Text(
+                    "GUARDAR",
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    if (authController.pathImageUser.value != '') {
+                      UserModel _updatedUser = UserModel(
+                        uid: authController.firestoreUser.value!.uid,
+                        email: authController.firestoreUser.value!.email,
+                        name: authController.nameController.text,
+                        photoUrl: authController.firestoreUser.value!.photoUrl,
+                      );
+                      await getImage.uploadFileUser(
+                          context,
+                          File(authController.pathImageUser.value),
+                          _updatedUser);
+
+                      authController.updateUser(_updatedUser);
+                    }
+                    Get.back();
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
-  }
-
-  Future _imgFromCamera(BuildContext context) async {
-    XFile? image =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
-
-    print(image!.path);
-
-    _uploadFile(context, File(image.path));
-  }
-
-  Future _imgFromGallery(BuildContext context) async {
-    XFile? image =
-        await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-
-    print(image!.path);
-    _uploadFile(context, File(image.path));
-  }
-
-  void _showPicker(context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return SafeArea(
-            child: Container(
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text("Acceder a la galeria"),
-                onTap: () {
-                  _imgFromGallery(context);
-                  Get.back();
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text("Acceder a la cámara"),
-                onTap: () {
-                  _imgFromCamera(context);
-                  Get.back();
-                },
-              ),
-            ],
-          ),
-        ));
-      },
-    );
-  }
-
-  Future _uploadFile(BuildContext context, File imageProfile) async {
-    firebase_storage.Reference storageReference = firebase_storage
-        .FirebaseStorage.instance
-        .ref()
-        .child('imagesProfile/${authController.firestoreUser.value!.uid}');
-
-    print(storageReference);
-
-    firebase_storage.UploadTask uploadTask =
-        storageReference.putFile(imageProfile);
-
-    print(uploadTask);
-
-    await uploadTask.whenComplete(() {
-      storageReference.getDownloadURL().then((url) {
-        UserModel _updatedUser = UserModel(
-          uid: authController.firestoreUser.value!.uid,
-          email: authController.firestoreUser.value!.email,
-          name: authController.firestoreUser.value!.name,
-          photoUrl: url,
-        );
-        authController.updateUser(_updatedUser);
-      });
-    });
   }
 }

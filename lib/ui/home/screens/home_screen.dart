@@ -4,7 +4,9 @@ import 'package:gangapp_flutter/global_widgets/navigation/custom_navigation_bar.
 import 'package:gangapp_flutter/ui/auth/controllers/auth_controller.dart';
 import 'package:gangapp_flutter/ui/home/controllers/nav_controller.dart';
 import 'package:gangapp_flutter/ui/home/screens/product_home_screen.dart';
+import 'package:gangapp_flutter/ui/products/controllers/product_controller.dart';
 import 'package:gangapp_flutter/ui/profile/screens/profile_screen.dart';
+import 'package:gangapp_flutter/ui/proof/controllers/product_proof_controller.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page1.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page2.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page3.dart';
@@ -17,6 +19,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NavController navController = Get.find();
+    ProductController productController = Get.find();
+    ProductProofController productProofController = Get.find();
+
     var screens = [
       Page1(),
       Page2(),
@@ -29,18 +34,26 @@ class HomeScreen extends StatelessWidget {
     // AuthController authController = Get.find();
     return Obx(
       () => Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Navigator.of(context).push(OverlayAnimation());
-            },
-          ),
-        ),
+        appBar: (navController.index.value != 1)
+            ? AppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    Navigator.of(context).push(OverlayAnimation());
+                  },
+                ),
+              )
+            : null,
         bottomNavigationBar: CustomNavigationBar(
           selectedIndex: navController.index.value,
           onIndexChanged: (i) {
             navController.index.value = i;
+            if (i != 2) {
+              productController.productsCategoryList.value.clear();
+            }
+            if (i != 1) {
+              productProofController.searchQueryController.clear();
+            }
           },
         ),
         body: screens[navController.index.value],

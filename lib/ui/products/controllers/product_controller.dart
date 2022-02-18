@@ -1,20 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:gangapp_flutter/models/product_model.dart';
-import 'package:gangapp_flutter/services/firestore/firestore_service_products.dart';
 import 'package:get/get.dart';
+import 'package:gangapp_flutter/services/firestore/firestore_service_products.dart';
+import 'package:gangapp_flutter/models/product_model.dart';
 
 class ProductController extends GetxController {
-  TextEditingController nameProduct = TextEditingController();
-  TextEditingController originalPrice = TextEditingController();
-  TextEditingController realPrice = TextEditingController();
-  TextEditingController descriptionProduct = TextEditingController();
-  DataBaseProducts dataBaseProducts = DataBaseProducts();
+  Rx<List<ProductModel>> productsList = Rx<List<ProductModel>>([]);
+  Rx<List<ProductModel>> productsCategoryList = Rx<List<ProductModel>>([]);
 
-  Future<bool> createProduct(ProductModel product) async {
-    return dataBaseProducts.createNewProduct(product);
+  List<String> productCategories = ['Hombre', 'Mujer', 'Niños', 'Equipamiento'];
+  @override
+  void onReady() {
+    productsList.bindStream(DataBaseProducts().productsStream());
+    super.onReady();
   }
 
-  var dropdownValue = 'One'.obs;
-
-  List<String> productCategories = ['One', 'Two', 'other', 'Four'];
+  Future<List<ProductModel>> categorySelected(String category) async {
+    productsCategoryList.value = [];
+    for (var element in productsList.value) {
+      if (element.productCategory == category) {
+        productsCategoryList.value.add(element);
+      }
+    }
+    return productsCategoryList.value;
+    // .toList();
+  }
 }
