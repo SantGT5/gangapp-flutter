@@ -23,6 +23,8 @@ class RowCategories extends StatelessWidget {
                 print(categories[index]);
                 productController.productsCategoryList.value =
                     await productController.categorySelected(categories[index]);
+                productController.updateSearchQuery(
+                    productController.searchQueryController.text);
               },
               style: ButtonStyle(
                   backgroundColor:
