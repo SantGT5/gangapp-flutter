@@ -4,22 +4,24 @@ part 'message_model.g.dart';
 
 @JsonSerializable(anyMap: true, explicitToJson: true)
 class MessageModel {
-  final String id;
-  final String from;
-  final String roomId;
-  final String text;
-  final int sentAt;
-  final dynamic timestamp;
-  final dynamic content;
+  String? id;
+  String? from;
+  String? roomId;
+  String? text;
+  int? sentAt;
+  // int? sendAt;
+  dynamic timestamp;
+  dynamic content;
 
   MessageModel({
-    required this.id,
-    required this.from,
-    required this.roomId,
-    required this.text,
+    this.id,
+    this.from,
+    this.roomId,
+    this.text,
+    // this.sendAt,
     required this.sentAt,
-    required this.timestamp,
-    required this.content,
+    this.timestamp,
+    this.content,
   });
 
   int getTimesTampMillis() {

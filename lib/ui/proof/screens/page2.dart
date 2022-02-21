@@ -18,6 +18,7 @@ class Page2 extends StatelessWidget {
     return Obx(
       () => Scaffold(
         floatingActionButton: FloatingActionButton(
+          heroTag: "HeroOne",
           onPressed: () {
             Get.toNamed(Routes.CHAT);
           },

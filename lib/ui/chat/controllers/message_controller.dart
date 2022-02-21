@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gangapp_flutter/models/message_model.dart';
+import 'package:gangapp_flutter/services/firestore/firestore_service_messages.dart';
 import 'package:get/get.dart';
 
 class MessageController extends GetxController {
@@ -12,13 +13,14 @@ class MessageController extends GetxController {
 
   @override
   void onReady() {
-    // TODO: implement onReady
+    messagesList.bindStream(DatabaseMessages().chatMessageStrem());
+
     super.onReady();
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
+    msgController.dispose();
     super.onClose();
   }
 }

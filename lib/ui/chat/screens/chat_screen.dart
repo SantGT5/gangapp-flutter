@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gangapp_flutter/models/message_model.dart';
 import 'package:gangapp_flutter/services/firestore/firestore_service.dart';
 import 'package:gangapp_flutter/services/firestore/firestore_service_messages.dart';
 import 'package:gangapp_flutter/ui/chat/controllers/message_controller.dart';
@@ -11,9 +12,23 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     MessageController messageController = Get.find();
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        heroTag: "HeroTwo",
+        onPressed: () {
+          print(messageController.messagesList);
+        },
+      ),
       appBar: AppBar(),
       body: Stack(
         children: [
+          ListView.builder(
+              itemCount: messageController.messages.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Row(
+                  children: [],
+                );
+              }),
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
@@ -21,7 +36,7 @@ class ChatScreen extends StatelessWidget {
               color: Colors.grey[300],
               child: Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Expanded(
@@ -30,8 +45,8 @@ class ChatScreen extends StatelessWidget {
                       minLines: 1,
                       maxLines: 10,
                       onChanged: messageController.getMessages,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(
+                      style: const TextStyle(color: Colors.black),
+                      decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 5),
                         hintText: "Escribe tu mensaje",
                         hintStyle: TextStyle(color: Colors.black38),
@@ -39,7 +54,7 @@ class ChatScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   FloatingActionButton(
@@ -51,7 +66,7 @@ class ChatScreen extends StatelessWidget {
                           _messageId, messageController.message.value);
                       messageController.msgController.clear();
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.send,
                       size: 20,
                     ),
