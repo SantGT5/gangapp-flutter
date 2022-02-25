@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gangapp_flutter/global_widgets/animations/overlay_animation.dart';
 import 'package:gangapp_flutter/global_widgets/navigation/custom_navigation_bar.dart';
 import 'package:gangapp_flutter/ui/auth/controllers/auth_controller.dart';
+import 'package:gangapp_flutter/ui/chat/screens/rooms_chat_screen.dart';
 import 'package:gangapp_flutter/ui/home/controllers/nav_controller.dart';
 import 'package:gangapp_flutter/ui/home/screens/product_home_screen.dart';
 import 'package:gangapp_flutter/ui/products/controllers/product_controller.dart';
@@ -11,6 +12,7 @@ import 'package:gangapp_flutter/ui/proof/screens/page1.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page2.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page3.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page4.dart';
+import 'package:gangapp_flutter/ui/video/screens/videos_screen.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,8 +25,8 @@ class HomeScreen extends StatelessWidget {
     ProductProofController productProofController = Get.find();
 
     var screens = [
-      Page1(),
-      Page2(),
+      VideosScreen(),
+      RoomsChatScreen(),
       ProductHomeScreen(),
       ProfileScreen(),
     ];
@@ -34,17 +36,16 @@ class HomeScreen extends StatelessWidget {
     // AuthController authController = Get.find();
     return Obx(
       () => Scaffold(
-        appBar:
-            (navController.index.value != 1 && navController.index.value != 2)
-                ? AppBar(
-                    leading: IconButton(
-                      icon: Icon(Icons.menu),
-                      onPressed: () {
-                        Navigator.of(context).push(OverlayAnimation());
-                      },
-                    ),
-                  )
-                : null,
+        appBar: (navController.index.value != 2)
+            ? AppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    Navigator.of(context).push(OverlayAnimation());
+                  },
+                ),
+              )
+            : null,
         bottomNavigationBar: CustomNavigationBar(
           selectedIndex: navController.index.value,
           onIndexChanged: (i) {

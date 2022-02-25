@@ -34,10 +34,7 @@ class ProductHomeScreen extends StatelessWidget {
             size: 40.0,
           ),
           onPressed: () {
-            print(productController.addProducts.value);
-            productController.addProducts.value.clear();
-            print(productController.addProducts.value);
-            // Get.toNamed(Routes.PRODUCTFORM);
+            Get.toNamed(Routes.PRODUCTFORM);
           },
         ),
         body: Padding(

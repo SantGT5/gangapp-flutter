@@ -9,11 +9,11 @@ class DatabaseMessages {
   static String _collection = "chat_messages";
   static FirestoreService _service = FirestoreService(_collection);
 
-  static addMessage(String id, String text) {
+  static addMessage(String id, String text, String roomId) {
     _service.set(id, {
       "id": id,
       "from": Get.find<AuthController>().firestoreUser.value!.uid,
-      "roomId": "General",
+      "roomId": roomId,
       "text": text,
       "sendAt": 1,
       "timestamp": FieldValue.serverTimestamp(),
@@ -21,11 +21,12 @@ class DatabaseMessages {
     });
   }
 
-  Stream<List<MessageModel>> chatMessageStrem() {
+  Stream<List<MessageModel>> chatMessageStream(String roomId, int index) {
     return _firestore
         .collection(_collection)
-        .where("roomId", isEqualTo: "General")
+        .where("roomId", isEqualTo: roomId)
         .orderBy("timestamp", descending: true)
+        .limitToLast(1 + index)
         .snapshots()
         .map((QuerySnapshot query) {
       List<MessageModel> retVal = [];
