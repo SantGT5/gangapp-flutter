@@ -103,13 +103,51 @@ class VideosForm extends StatelessWidget {
                   child: GlobalTextField(
                     controller: videosEditController.titleVideo,
                     obscureText: false,
-                    hintText: "Introduce el nombre del producto",
+                    hintText: "Introduce el título del video",
                     keyboardType: TextInputType.emailAddress,
                     validator: FormValidator().isValidName,
                     maxLines: 1,
                     minLines: 1,
                     onSave: (value) {
                       videosEditController.titleVideo.text = value!;
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Container(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  width: double.infinity,
+                  child: GlobalTextField(
+                    controller: videosEditController.subtitleVideo,
+                    obscureText: false,
+                    hintText: "Introduce el subtítulo del video",
+                    keyboardType: TextInputType.name,
+                    validator: FormValidator().isValidName,
+                    maxLines: 1,
+                    minLines: 1,
+                    onSave: (value) {
+                      videosEditController.subtitleVideo.text = value!;
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Container(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  width: double.infinity,
+                  child: GlobalTextField(
+                    controller: videosEditController.urlVideo,
+                    obscureText: false,
+                    hintText: "Introduce el url del video",
+                    keyboardType: TextInputType.emailAddress,
+                    validator: FormValidator().isValidName,
+                    maxLines: 1,
+                    minLines: 1,
+                    onSave: (value) {
+                      videosEditController.urlVideo.text = value!;
                     },
                   ),
                 ),
@@ -144,6 +182,8 @@ class VideosForm extends StatelessWidget {
                         VideoModel newVideo = VideoModel(
                           uid: videosEditController.uidVideo.value,
                           title: videosEditController.titleVideo.text,
+                          urlVideo: videosEditController.urlVideo.text,
+                          subtitle: videosEditController.subtitleVideo.text,
                         );
                         // ProductModel newProduct = ProductModel(
                         //     uid: productEditController.productUid.value,

@@ -13,6 +13,17 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthController authController = Get.find();
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.arrow_back,
+          size: 30,
+        ),
+        backgroundColor: Colors.green[200],
+        onPressed: () {
+          Get.back();
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: Obx(
         () => SingleChildScrollView(
           child: (authController.firestoreUser.value != null)

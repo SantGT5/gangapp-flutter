@@ -6,6 +6,7 @@ import 'package:gangapp_flutter/ui/chat/screens/rooms_chat_screen.dart';
 import 'package:gangapp_flutter/ui/home/controllers/nav_controller.dart';
 import 'package:gangapp_flutter/ui/home/screens/product_home_screen.dart';
 import 'package:gangapp_flutter/ui/products/controllers/product_controller.dart';
+import 'package:gangapp_flutter/ui/profile/screens/principal_profile.dart';
 import 'package:gangapp_flutter/ui/profile/screens/profile_screen.dart';
 import 'package:gangapp_flutter/ui/proof/controllers/product_proof_controller.dart';
 import 'package:gangapp_flutter/ui/proof/screens/page1.dart';
@@ -28,7 +29,8 @@ class HomeScreen extends StatelessWidget {
       VideosScreen(),
       RoomsChatScreen(),
       ProductHomeScreen(),
-      ProfileScreen(),
+      // ProfileScreen(),
+      PrincipalProfile()
     ];
 
     AuthController authController = AuthController();

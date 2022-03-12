@@ -17,11 +17,6 @@ class VideoDetailsScreen extends StatelessWidget {
       init: PlayVideoController(videoUrlUid: Get.arguments["videoUrl"]),
       builder: (controller) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              print(Get.arguments["videoUrl"]);
-            },
-          ),
           body: YoutubePlayerBuilder(
             player: YoutubePlayer(
               onEnded: (metadata) {
@@ -32,8 +27,20 @@ class VideoDetailsScreen extends StatelessWidget {
             ),
             builder: (context, player) => Scaffold(
               appBar: AppBar(),
-              body: Container(
-                child: player,
+              body: Stack(
+                children: [
+                  Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    color: Colors.black,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: 400,
+                      child: player,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
